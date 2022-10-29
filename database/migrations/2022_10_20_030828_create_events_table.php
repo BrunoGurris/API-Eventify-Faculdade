@@ -12,14 +12,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('name');
+            $table->text('description');
+            $table->timestamp('date');
             $table->string('zip_code');
             $table->string('street');
-            $table->string('number')->nullable();
+            $table->string('number');
             $table->string('neighborhood')->nullable();
             $table->string('city');
             $table->string('state');
-            $table->text('description');
-            $table->text('image')->nullable();
+            $table->text('image');
             $table->timestamps();
         });
     }

@@ -13,13 +13,15 @@ class EventSeeder extends Seeder
         $event = new Event();
         $event->user_id = 1;
         $event->name = 'Encontro de carros importados';
+        $event->description = 'Aqui uma breve descrição sobre o evento. By: Seeder';
+        $event->date = now();
         $event->zip_code = '18074658';
         $event->street = 'Rua Lucio Leme';
         $event->number = '132';
         $event->neighborhood = 'São Guilherme';
         $event->city = 'Sorocaba';
         $event->state = 'SP';
-        $event->description = 'Aqui uma breve descrição sobre o evento. By: Seeder';
+        $event->image = 'aa';
         $event->save();
     }
 }
