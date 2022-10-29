@@ -23,7 +23,7 @@ Route::middleware(['apiJWT'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
     Route::prefix('events')->group(function() {
-        Route::get('/', [EventController::class, 'getAll']);
+        Route::get('/', [EventController::class, 'get']);
         Route::post('/create', [EventController::class, 'create']);
     });
 });

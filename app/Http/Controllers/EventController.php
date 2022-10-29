@@ -19,11 +19,20 @@ class EventController extends Controller
     }
 
 
-    public function getAll()
+    public function get(Request $request)
     {
         try {
-            $events = Event::orderBy('id', 'desc')->get();
-            return response()->json($events, 200);
+            if($request->my == true) {
+                $user = User::findOrFail(Auth::id());
+
+                $events = Event::where('user_id', $user->id)->orderBy('id', 'desc')->get();
+                return response()->json($events, 200);
+            }
+            else
+            {
+                $events = Event::orderBy('id', 'desc')->get();
+                return response()->json($events, 200);
+            }
         }
         catch(Exception $e) {
             return response()->json([
