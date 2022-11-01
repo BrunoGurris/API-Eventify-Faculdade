@@ -131,6 +131,14 @@ class EventService
     public function delete($event, $user)
     {
         try {
+            /* Verifica se o evento existe */
+            if(!$event) {
+                return response()->json([
+                    'message' => 'O evento não foi encontrado!'
+                ], 400);
+            }
+            /* */
+
             /* Verifica o dono do evento */
             if($user->id != $event->user_id) {
                 return response()->json([

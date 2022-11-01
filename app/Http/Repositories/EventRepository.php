@@ -4,6 +4,7 @@ namespace App\Http\Repositories;
 
 use App\Models\Event;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 
 class EventRepository
 {
@@ -37,7 +38,9 @@ class EventRepository
     public function delete($event)
     {
         try {
+            Storage::delete($event->image);
             $event->delete();
+
             return response()->json($event, 200);
         }
         catch(Exception $e) {
