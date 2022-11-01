@@ -127,4 +127,24 @@ class EventService
         }
     }
 
+
+    public function delete($event, $user)
+    {
+        try {
+            /* Verifica o dono do evento */
+            if($user->id != $event->user_id) {
+                return response()->json([
+                    'message' => 'Este evento não pertece a você!'
+                ], 400);
+            }
+            /* */
+
+            return $this->eventRepository->delete($event);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível excluir o evento!'
+            ], 400);
+        }
+    }
 }

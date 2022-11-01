@@ -24,11 +24,25 @@ class EventRepository
             $event->image = $upload;
             $event->save();
 
-            return response()->json($event, 200);
+            return response()->json($event, 201);
         }
         catch(Exception $e) {
             return response()->json([
                 'message' => 'Não foi possível criar o evento!'
+            ], 400);
+        }
+    }
+
+
+    public function delete($event)
+    {
+        try {
+            $event->delete();
+            return response()->json($event, 200);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível excluir o evento!'
             ], 400);
         }
     }

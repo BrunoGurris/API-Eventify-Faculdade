@@ -54,4 +54,20 @@ class EventController extends Controller
             ], 400);
         }
     }
+
+
+    public function delete($id)
+    {
+        try {
+            $user = User::findOrFail(Auth::id());
+            $event = Event::find($id);
+
+            return $this->eventService->delete($event, $user);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível excluir o evento!'
+            ], 400);
+        }
+    }
 }

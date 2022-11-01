@@ -18,7 +18,7 @@ class UserRepository
             $user->password = Hash::make($request->password);
             $user->save();
 
-            return response()->json($user ,200);
+            return response()->json($user, 200);
         }
         catch(Exception $e) {
             return response()->json([
