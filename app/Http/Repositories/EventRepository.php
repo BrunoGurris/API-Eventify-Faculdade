@@ -8,6 +8,19 @@ use Illuminate\Support\Facades\Storage;
 
 class EventRepository
 {
+    public function getByID($event)
+    {
+        try {
+            return response()->json($event, 200);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível carregar o evento!'
+            ], 400);
+        }
+    }
+
+
     public function create($request, $user, $upload)
     {
         try {

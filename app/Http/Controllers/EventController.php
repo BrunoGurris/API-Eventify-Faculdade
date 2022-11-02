@@ -42,6 +42,21 @@ class EventController extends Controller
     }
 
 
+    public function getByID($id)
+    {
+        try {
+            $event = Event::find($id);
+
+            return $this->eventService->getByID($event);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível carregar o evento!'
+            ], 400);
+        }
+    }
+
+
     public function create(Request $request)
     {
         try {

@@ -26,6 +26,7 @@ Route::middleware(['apiJWT'])->group(function () {
 
     Route::prefix('events')->group(function() {
         Route::get('/', [EventController::class, 'get']);
+        Route::get('/{id}', [EventController::class, 'getByID']);
         Route::post('/create', [EventController::class, 'create']);
         Route::delete('/delete/{id}', [EventController::class, 'delete']);
     });

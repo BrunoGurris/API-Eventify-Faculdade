@@ -15,6 +15,27 @@ class EventService
     }
 
 
+    public function getByID($event)
+    {
+        try {
+            /* Verifica se o evento existe */
+            if(!$event) {
+                return response()->json([
+                    'message' => 'O evento não foi encontrado!'
+                ], 400);
+            }
+            /* */
+
+            return $this->eventRepository->getByID($event);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível carregar o evento!'
+            ], 400);
+        }
+    }
+
+
     public function create($request, $user)
     {
         try {
