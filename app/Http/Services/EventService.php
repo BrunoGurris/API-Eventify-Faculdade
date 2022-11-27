@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Http\Repositories\EventRepository;
+use App\Models\EventUser;
 use Exception;
 
 class EventService
@@ -194,6 +195,35 @@ class EventService
         catch(Exception $e) {
             return response()->json([
                 'message' => 'Não foi possível criar o comentário!'
+            ], 400);
+        }
+    }
+
+
+    public function participate($event, $user)
+    {
+        try {
+            /* Verifica se o evento existe */
+            if(!$event) {
+                return response()->json([
+                    'message' => 'O evento não foi encontrado!'
+                ], 400);
+            }
+            /* */
+
+            /* Verifica se o usuario já participa do evento */
+            if(!is_null(EventUser::where('event_id', $event->id)->where('user_id', $user->id)->first())) {
+                return response()->json([
+                    'message' => 'Você já esta participando deste evento!'
+                ], 400);
+            }
+            /* */
+
+            return $this->eventRepository->participate($event, $user);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível participar do evento!'
             ], 400);
         }
     }

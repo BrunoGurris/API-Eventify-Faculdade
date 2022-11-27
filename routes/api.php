@@ -31,6 +31,7 @@ Route::middleware(['apiJWT'])->group(function () {
         Route::delete('/delete/{id}', [EventController::class, 'delete']);
 
         Route::post('/{id}/comments/create', [EventController::class, 'comment']);
+        Route::put('/{id}/participate', [EventController::class, 'participate']);
     });
 });
 

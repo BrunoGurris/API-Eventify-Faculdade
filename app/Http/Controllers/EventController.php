@@ -100,4 +100,20 @@ class EventController extends Controller
             ], 400);
         }
     }
+
+
+    public function participate($id)
+    {
+        try {
+            $user = User::findOrFail(Auth::id());
+            $event = Event::find($id);
+
+            return $this->eventService->participate($event, $user);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível participar do evento!'
+            ], 400);
+        }
+    }
 }
