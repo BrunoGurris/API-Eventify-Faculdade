@@ -9,8 +9,12 @@ class Comment extends Model
 {
     use HasFactory;
 
-    public function user()
+    protected $appends = [
+        'user'
+    ];
+
+    public function getUserAttribute()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return User::where('id', $this->user_id)->first();
     }
 }
