@@ -28,7 +28,7 @@ class EventController extends Controller
             }
             else
             {
-                $events = Event::with('comments')->orderBy('id', 'desc')->get();
+                $events = Event::orderBy('id', 'desc')->get();
                 return response()->json($events, 200);
             }
         }
@@ -44,6 +44,7 @@ class EventController extends Controller
     {
         try {
             $event = Event::find($id);
+            $event->comments = $event->comments;
 
             return $this->eventService->getByID($event);
         }
