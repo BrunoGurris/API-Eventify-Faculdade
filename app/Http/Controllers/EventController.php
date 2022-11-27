@@ -24,13 +24,11 @@ class EventController extends Controller
         try {
             if($request->my == true) {
                 $user = User::findOrFail(Auth::id());
-
-                $events = Event::where('user_id', $user->id)->orderBy('id', 'desc')->get();
-                return response()->json($events, 200);
+                return response()->json($user->events, 200);
             }
             else
             {
-                $events = Event::orderBy('id', 'desc')->get();
+                $events = Event::with('comments')->orderBy('id', 'desc')->get();
                 return response()->json($events, 200);
             }
         }
@@ -82,6 +80,22 @@ class EventController extends Controller
         catch(Exception $e) {
             return response()->json([
                 'message' => 'Não foi possível excluir o evento!'
+            ], 400);
+        }
+    }
+
+
+    public function comment($id, Request $request)
+    {
+        try {
+            $user = User::findOrFail(Auth::id());
+            $event = Event::find($id);
+
+            return $this->eventService->comment($event, $request, $user);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível criar o comentário!'
             ], 400);
         }
     }

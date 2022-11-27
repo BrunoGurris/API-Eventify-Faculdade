@@ -17,6 +17,11 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'user_id', 'id')->orderBy('id', 'desc');
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

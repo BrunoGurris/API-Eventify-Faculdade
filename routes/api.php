@@ -29,6 +29,8 @@ Route::middleware(['apiJWT'])->group(function () {
         Route::get('/{id}', [EventController::class, 'getByID']);
         Route::post('/create', [EventController::class, 'create']);
         Route::delete('/delete/{id}', [EventController::class, 'delete']);
+
+        Route::post('/{id}/comments/create', [EventController::class, 'comment']);
     });
 });
 

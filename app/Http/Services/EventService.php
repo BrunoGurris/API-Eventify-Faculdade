@@ -176,4 +176,25 @@ class EventService
             ], 400);
         }
     }
+
+
+    public function comment($event, $request, $user)
+    {
+        try {
+            /* Verifica se o evento existe */
+            if(!$event) {
+                return response()->json([
+                    'message' => 'O evento não foi encontrado!'
+                ], 400);
+            }
+            /* */
+
+            return $this->eventRepository->comment($event, $request, $user);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível criar o comentário!'
+            ], 400);
+        }
+    }
 }

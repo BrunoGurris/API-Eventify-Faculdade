@@ -2,6 +2,7 @@
 
 namespace App\Http\Repositories;
 
+use App\Models\Comment;
 use App\Models\Event;
 use Exception;
 use Illuminate\Support\Facades\Storage;
@@ -59,6 +60,25 @@ class EventRepository
         catch(Exception $e) {
             return response()->json([
                 'message' => 'Não foi possível excluir o evento!'
+            ], 400);
+        }
+    }
+
+
+    public function comment($event, $request, $user)
+    {
+        try {
+            $comment = new Comment();
+            $comment->event_id = $event->id;
+            $comment->user_id = $user->id;
+            $comment->message = $request->message;
+            $comment->save();
+
+            return response()->json($comment, 201);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível criar o comentário!'
             ], 400);
         }
     }
