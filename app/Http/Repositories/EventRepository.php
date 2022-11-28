@@ -93,7 +93,7 @@ class EventRepository
             $eventUser->user_id = $user->id;
             $eventUser->save();
 
-            return response()->json($eventUser, 200);
+            return response()->json($event, 200);
         }
         catch(Exception $e) {
             return response()->json([
