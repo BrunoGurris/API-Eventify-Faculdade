@@ -40,7 +40,10 @@ class Event extends Model
 
     public function getRatingAttribute()
     {
-        return number_format(floatval(EventUserRating::where('event_id', $this->id)->sum('rating') / EventUserRating::where('event_id', $this->id)->count()), 2, ',', '.');
+        $division = EventUserRating::where('event_id', $this->id)->count();
+        $division == 0 ? $division : 1;
+
+        return number_format(floatval(EventUserRating::where('event_id', $this->id)->sum('rating') / $division), 2, ',', '.');
     }
 
     public function getRatingMeAttribute()
