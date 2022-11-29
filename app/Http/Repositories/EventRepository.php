@@ -5,6 +5,7 @@ namespace App\Http\Repositories;
 use App\Models\Comment;
 use App\Models\Event;
 use App\Models\EventUser;
+use App\Models\EventUserRating;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 
@@ -112,6 +113,27 @@ class EventRepository
         catch(Exception $e) {
             return response()->json([
                 'message' => 'Não foi possível desparticipar do evento!'
+            ], 400);
+        }
+    }
+
+
+    public function rating($event, $request, $user)
+    {
+        try {
+            EventUserRating::where('event_id', $event->id)->where('user_id', $user->id)->delete();
+
+            $eventUserRating = new EventUserRating();
+            $eventUserRating->event_id = $event->id;
+            $eventUserRating->user_id = $user->id;
+            $eventUserRating->rating = $request->rating;
+            $eventUserRating->save();
+
+            return response()->json($event, 200);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível avaliar o evento!'
             ], 400);
         }
     }

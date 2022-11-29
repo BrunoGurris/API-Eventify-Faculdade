@@ -132,4 +132,20 @@ class EventController extends Controller
             ], 400);
         }
     }
+
+
+    public function rating($id, Request $request)
+    {
+        try {
+            $user = User::findOrFail(Auth::id());
+            $event = Event::find($id);
+
+            return $this->eventService->rating($event, $request, $user);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível avaliar o evento!'
+            ], 400);
+        }
+    }
 }

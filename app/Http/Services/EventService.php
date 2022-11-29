@@ -256,4 +256,41 @@ class EventService
             ], 400);
         }
     }
+
+
+    public function rating($event, $request, $user)
+    {
+        try {
+            /* Verifica se o evento existe */
+            if(!$event) {
+                return response()->json([
+                    'message' => 'O evento não foi encontrado!'
+                ], 400);
+            }
+            /* */
+
+            /* Verifica se o usuario já participa do evento */
+            if(is_null(EventUser::where('event_id', $event->id)->where('user_id', $user->id)->first())) {
+                return response()->json([
+                    'message' => 'Você não esta participando deste evento!'
+                ], 400);
+            }
+            /* */
+
+            /* Verifica a avaliação */
+            if($request->rating < 0 || $request->rating > 10) {
+                return response()->json([
+                    'message' => 'Avalie o evento de 0 a 10!'
+                ], 400);
+            }
+            /* */
+
+            return $this->eventRepository->rating($event, $request, $user);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível avaliar o evento!'
+            ], 400);
+        }
+    }
 }

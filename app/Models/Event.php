@@ -12,7 +12,9 @@ class Event extends Model
 
     protected $appends = [
         'participate',
-        'count_participants'
+        'count_participants',
+        'rating',
+        'rating_me'
     ];
 
     public function comments()
@@ -34,5 +36,23 @@ class Event extends Model
     public function getCountParticipantsAttribute()
     {
         return EventUser::where('event_id', $this->id)->count();
+    }
+
+    public function getRatingAttribute()
+    {
+        return number_format(floatval(EventUserRating::where('event_id', $this->id)->sum('rating') / EventUserRating::where('event_id', $this->id)->count()), 2, ',', '.');
+    }
+
+    public function getRatingMeAttribute()
+    {
+        $rating = EventUserRating::where('event_id', $this->id)->where('user_id', Auth::id())->first();
+
+        if($rating) {
+            return $rating->rating;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
