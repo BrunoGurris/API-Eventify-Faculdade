@@ -19,7 +19,7 @@ class Event extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'event_id', 'id');
+        return $this->hasMany(Comment::class, 'event_id', 'id')->orderBy('id', 'desc');
     }
 
     public function getParticipateAttribute()
