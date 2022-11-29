@@ -41,7 +41,7 @@ class Event extends Model
     public function getRatingAttribute()
     {
         $division = EventUserRating::where('event_id', $this->id)->count();
-        $division == 0 ? 1 : $division;
+        $division = 1;
 
         return number_format(floatval(EventUserRating::where('event_id', $this->id)->sum('rating') / $division), 2, ',', '.');
     }
