@@ -116,4 +116,20 @@ class EventController extends Controller
             ], 400);
         }
     }
+
+
+    public function departicipate($id)
+    {
+        try {
+            $user = User::findOrFail(Auth::id());
+            $event = Event::find($id);
+
+            return $this->eventService->departicipate($event, $user);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível desparticipar do evento!'
+            ], 400);
+        }
+    }
 }

@@ -101,4 +101,18 @@ class EventRepository
             ], 400);
         }
     }
+
+
+    public function departicipate($event, $user)
+    {
+        try {
+            EventUser::where('event_id', $event->id)->where('user_id', $user->id)->delete();
+            return response()->json($event, 200);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível desparticipar do evento!'
+            ], 400);
+        }
+    }
 }

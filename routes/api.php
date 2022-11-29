@@ -32,6 +32,7 @@ Route::middleware(['apiJWT'])->group(function () {
 
         Route::post('/{id}/comments/create', [EventController::class, 'comment']);
         Route::put('/{id}/participate', [EventController::class, 'participate']);
+        Route::put('/{id}/departicipate', [EventController::class, 'departicipate']);
     });
 });
 

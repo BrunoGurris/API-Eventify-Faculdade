@@ -227,4 +227,33 @@ class EventService
             ], 400);
         }
     }
+
+
+    public function departicipate($event, $user)
+    {
+        try {
+            /* Verifica se o evento existe */
+            if(!$event) {
+                return response()->json([
+                    'message' => 'O evento não foi encontrado!'
+                ], 400);
+            }
+            /* */
+
+            /* Verifica se o usuario já participa do evento */
+            if(is_null(EventUser::where('event_id', $event->id)->where('user_id', $user->id)->first())) {
+                return response()->json([
+                    'message' => 'Você não esta participando deste evento!'
+                ], 400);
+            }
+            /* */
+
+            return $this->eventRepository->departicipate($event, $user);
+        }
+        catch(Exception $e) {
+            return response()->json([
+                'message' => 'Não foi possível desparticipar do evento!'
+            ], 400);
+        }
+    }
 }
