@@ -11,7 +11,8 @@ class Event extends Model
     use HasFactory;
 
     protected $appends = [
-        'participate'
+        'participate',
+        'count_participants'
     ];
 
     public function comments()
@@ -28,5 +29,10 @@ class Event extends Model
         {
             return false;
         }
+    }
+
+    public function getCountParticipantsAttribute()
+    {
+        return EventUser::where('event_id', $this->id)->count();
     }
 }
